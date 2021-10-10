@@ -1,0 +1,23 @@
+server:
+  port: 9002
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: greeting_local_route
+          uri: forward:/hithere
+          predicates:
+            - Path=/greeting/**
+          filters:
+            - UpdateBrokerCookie
+        - id: goodbye_route
+          uri: http://localhost:8080/goodbye
+          predicates:
+            - Path=/goodbye/**
+          filters:
+            - UpdateBrokerCookie
+        - id: goodbye_route
+          uri: http://localhost:8080/seeya
+          predicates:
+            - Path=/seeya/**
